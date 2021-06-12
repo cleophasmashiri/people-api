@@ -2,23 +2,24 @@
 
 ## How to run application
 In a terminal on Linux, Unix or Mac.
-Tests.
+### Tests.
 ```
 ./mvnw test
 ```
 
-Run api.
+### Run api.
 ```
 ./mvnw clean spring-boot:run
 ```
 
 In a Command window on Windows Operating Systems.
-Tests
+
+### Tests
 ```
 mvnw.cmd test
 ```
 
-Run api
+### Run api
 ```
 mvnw.cmd clean spring-boot:run
 ```
