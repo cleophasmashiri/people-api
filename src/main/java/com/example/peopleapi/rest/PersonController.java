@@ -7,7 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +28,7 @@ public class PersonController {
     @Autowired
     public PersonService personService;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping("/{id}")
     public ResponseEntity<Person> getPerson(@PathVariable long id) {
         Person person = personService.getPerson(id);
 
@@ -36,24 +39,24 @@ public class PersonController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<?> getAll() {
         log.info("All Persons ...");
         List<Person> persons = personService.getAll();
         return new ResponseEntity<>(persons, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<?> addPerson(@Valid @RequestBody Person person) throws Exception {
         log.info("New Person ..." + person);
         if (person.getId() != null) {
-            throw new Exception("A new person cannot already have an ID, idexists");
+            throw new Exception("A new person cannot already have an ID, id exists");
         }
         personService.addPerson(person);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @PutMapping
     public ResponseEntity<?> updatePerson(@Valid @RequestBody Person person) {
         log.info("Upadate Person ..." + person);
         personService.updatePerson(person);
@@ -65,6 +68,15 @@ public class PersonController {
         log.info("Delete Person ..." + id);
         personService.remove(id);
         return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @GetMapping("/exception/{exception_id}")
+    public void getSpecificException(@PathVariable("exception_id") String pException) {
+        if ("not_found".equals(pException)) {
+            throw new DuplicateItemException("Duplicate arguments");
+        } else {
+            throw new InternalException("internal error");
+        }
     }
 
 }
