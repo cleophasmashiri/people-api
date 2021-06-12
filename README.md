@@ -1,18 +1,18 @@
 # people-api
 
 ## How to run application
-In a terminal run (Linux, Unix or Mac)
-Tests
+In a terminal on Linux, Unix or Mac.
+Tests.
 ```
 ./mvnw test
 ```
 
-Run api
+Run api.
 ```
 ./mvnw clean spring-boot:run
 ```
 
-In a Command window run (Windows)
+In a Command window on Windows Operating Systems.
 Tests
 ```
 mvnw.cmd test
